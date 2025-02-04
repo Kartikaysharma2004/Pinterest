@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="shortcut icon" href="https://s.pinimg.com/webapp/favicon_48x48-7470a30d.png" type="image/x-icon">
+    <title>Pinterest</title>
+</head>
+
+<body class="bg-gray-100 flex justify-center items-center h-screen relative">
+    <!-- Background Grid Images -->
+    <div class="absolute inset-0 gap-2">
+        <img src="https://media.istockphoto.com/id/1483730032/vector/colorful-and-pop-background-illustration.jpg?s=612x612&w=0&k=20&c=TyZEQgXjhpKh0n9sOk4cS65Kr6XFwHsrgIUAauAnZyE=" class="w-full h-full object-cover block" />
+    </div>
+
+    <!-- Login Box -->
+    <div class="bg-white w-96 p-6 rounded-3xl shadow-xl text-center relative z-10">
+        <img src="https://i.pinimg.com/originals/d3/d1/75/d3d175e560ae133f1ed5cd4ec173751a.png" alt="pin logo" class="w-12 mx-auto mb-4" />
+        <p class="text-2xl font-semibold text-gray-800 mb-2">Welcome Back!</p>
+        
+        <form class="mt-4" action="/login" method="post">
+            <input type="text" name="username" placeholder="Username" class="w-full p-3 border border-gray-300 rounded-lg mb-2 focus:ring-2 focus:ring-red-500 focus:outline-none" required />
+            
+            <input type="password" name="password" placeholder="Password" class="w-full p-3 border border-gray-300 rounded-lg mb-2 focus:ring-2 focus:ring-red-500 focus:outline-none" required />
+            
+            <a href="/forgot" class="text-sm text-gray-600 font-semibold mt-2 inline-block hover:text-red-500 transition">Forgot your password?</a>
+
+            <% if (error.length > 0) { %>
+                <p class="text-red-500 text-sm font-medium"><%= error %></p>
+            <% } %>
+
+            <input type="submit" value="Log in" class="w-full bg-red-600 text-white font-semibold p-3 rounded-lg cursor-pointer hover:bg-red-700 mt-4 transition" />
+        </form>
+
+        <p class="text-gray-500 text-xs mt-4">By continuing, you agree to Pinterest's <a href="#" class="text-red-500">Terms of Service</a> and <a href="#" class="text-red-500">Privacy Policy</a>.</p>
+        
+        <hr class="my-3 border-gray-300">
+        
+        <p class="text-sm text-gray-600">Not on Pinterest yet? <a href="/" class="text-red-600 font-semibold">Sign up</a></p>
+    </div>
+</body>
+
+</html>

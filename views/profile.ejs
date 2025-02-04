@@ -1,0 +1,154 @@
+<% include ./partials/header.ejs %>
+  <% include ./partials/nav.ejs %>
+
+    <div class="max-w-xl mx-auto text-center p-6">
+      <!-- Profile Image -->
+      <form hidden id="uploadform" name="image" action="/fileupload" method="post" enctype="multipart/form-data">
+        <input type="file" name="image">
+      </form>
+
+      <div class="relative w-32 h-32 mx-auto mb-4">
+        <div class="w-32 h-32 rounded-full overflow-hidden shadow-md">
+          <img src="/images/uploads/<%= user.dp ? user.dp : 'usericon.jpg' %>" alt="Profile Picture"
+            class="w-full h-full object-cover" loading="lazy">
+        </div>
+
+        <!-- Edit Icon -->
+        <span id="uploadicon"
+          class="absolute bottom-2 right-0 w-10 h-10 rounded-full flex items-center justify-center bg-zinc-200 shadow-md hover:bg-zinc-300 transition cursor-pointer hidden">
+          <i class="text-zinc-800 fa-solid fa-pencil"></i>
+        </span>
+      </div>
+
+      <!-- Name & Username -->
+      <p class="text-gray-900 capitalize mt-2 text-2xl font-bold">
+        <%= user.fullname %>
+          <button onclick="toggleEdit('nameForm', 'editName')" id="editName"
+            class="ml-2 text-blue-500 text-xs text-zinc-800 hidden">
+            <i class="text-zinc-800 fa-solid fa-pencil"></i>
+          </button>
+      </p>
+
+      <!-- Name Edit Form -->
+      <form action="/setfullname" method="post" id="nameForm" class="hidden">
+        <input type="text" name="fullname"
+          class="text-lg text-center font-semibold text-gray-900 capitalize w-full p-2 border rounded"
+          value="<%= user.fullname %>">
+        <button type="submit"
+          class="bg-gray-200 text-gray-800 font-semibold px-4 py-1 rounded mt-2 hover:bg-gray-300 transition">Save</button>
+      </form>
+
+      <p class="text-gray-500 mt-2 text-sm">
+        <i class="fa-brands fa-pinterest"></i>
+        <%= user.username %>
+          <button onclick="toggleEdit('usernameForm', 'editUsername')" id="editUsername"
+            class="ml-2 text-blue-500 text-xs text-zinc-800 hidden">
+            <i class="text-zinc-800 fa-solid fa-pencil"></i>
+          </button>
+      </p>
+
+      <!-- Username Edit Form -->
+      <form action="/setusername" method="post" id="usernameForm" class="hidden">
+        <input type="text" name="username" class="text-center text-gray-600 text-lg w-full p-2 border rounded"
+          value="<%= user.username %>">
+        <button type="submit"
+          class="bg-gray-200 text-gray-800 font-semibold px-4 py-1 rounded mt-2 hover:bg-gray-300 transition">Save</button>
+      </form>
+
+      <!-- User Bio -->
+      <p class="text-gray-500 mt-2 text-sm">
+        <%= user.bio ? user.bio : "Share something about yourself..." %>
+          <button onclick="toggleEdit('bioForm', 'editBio')" id="editBio"
+            class="ml-2 text-blue-500 text-xs text-zinc-800 hidden">
+            <i class="text-zinc-800 fa-solid fa-pencil"></i>
+          </button>
+      </p>
+
+      <!-- Bio Edit Form -->
+      <form action="/setbio" method="POST" id="bioForm" class="hidden">
+        <textarea name="bio" class="w-full p-2 border rounded"><%= user.bio %></textarea>
+        <button type="submit"
+          class="bg-gray-200 text-gray-800 font-semibold px-4 py-1 rounded mt-2 hover:bg-gray-300 transition">Save</button>
+      </form>
+
+      <!-- Action Buttons -->
+      <div class="flex flex-wrap justify-center gap-3 mt-4">
+
+        <button type="submit" id="editbtn"
+          class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-full shadow hover:bg-gray-300 transition">
+          Edit Profile
+        </button>
+
+        <form class="flex flex-wrap justify-center gap-3" action="/upload" method="post" enctype="multipart/form-data">
+          <label for="file-upload"
+            class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-full shadow cursor-pointer hover:bg-gray-300 transition">
+            Choose File
+          </label>
+          <input type="file" id="file-upload" name="file" class="hidden">
+          <button type="submit"
+            class="bg-gray-200 text-gray-800 font-semibold px-4 py-2 rounded-full shadow hover:bg-gray-300 transition">
+            Upload
+          </button>
+        </form>
+
+      </div>
+    </div>
+    <hr class="mx-20">
+
+    <div id="imagecard" class="container mx-auto p-5">
+      <div class="columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+        <% user.posts.forEach(function(post){ %>
+
+          <div class="break-inside-avoid rounded-lg overflow-hidden shadow-lg cursor-pointer relative group">
+
+
+            <!-- Post image -->
+            <img src="/images/uploads/<%= post.image %>" class="w-full object-cover rounded-md transition duration-300 ease-in-out 
+        hover:brightness-125 hover:scale-105 hover:rotate-1" loading="lazy">
+          </div>            
+
+          <% }) %>
+      </div>
+    </div>
+
+
+    <script>
+      //dp edit
+      // Profile Picture Upload
+      document.querySelector("#uploadicon").addEventListener("click", function () {
+        document.querySelector("#uploadform input").click();
+      });
+
+      document.querySelector("#uploadform input").addEventListener("change", function () {
+        document.querySelector("#uploadform").submit();
+      });
+
+
+      // Edit Profile Button
+      document.querySelector("#editbtn").addEventListener("click", function () {
+        const uploadIcon = document.querySelector("#uploadicon");
+        const editName = document.querySelector("#editName");
+        const editUsername = document.querySelector("#editUsername");
+        const editBio = document.querySelector("#editBio");
+
+        const isHidden = uploadIcon.style.display === "none" || uploadIcon.style.display === "";
+
+        uploadIcon.style.display = isHidden ? "flex" : "none";
+        editName.style.display = isHidden ? "inline" : "none";
+        editUsername.style.display = isHidden ? "inline" : "none";
+        editBio.style.display = isHidden ? "inline" : "none";
+
+        this.innerHTML = isHidden ? "Save Profile" : "Edit Profile";
+      });
+
+      // Toggle Edit Forms
+      function toggleEdit(formId, buttonId) {
+        const form = document.getElementById(formId);
+        const button = document.getElementById(buttonId);
+
+        form.classList.toggle("hidden");
+      }
+
+    </script>
+
+    <% include ./partials/footer.ejs %>

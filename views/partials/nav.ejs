@@ -1,0 +1,30 @@
+<header class="flex items-center justify-between p-4 sticky top-0 w-full z-50 bg-white">
+    <div class="flex items-center space-x-4">
+        <a href="/feed" class="h-10 max-sm:h-8">
+            <img src="https://s.pinimg.com/webapp/favicon_48x48-7470a30d.png" alt="Pinterest Logo"
+                class="h-full">
+        </a>
+        <nav class="flex max-md:hidden space-x-4">
+            <a href="/feed" class="text-black font-semibold px-3 py-2 rounded-full hover:bg-gray-200">Home</a>
+            <a href="#" class="text-black font-semibold px-3 py-2 rounded-full hover:bg-gray-200">Explore</a>
+            <a href="#" class="text-black font-semibold px-3 py-2 rounded-full hover:bg-gray-200">Create</a>
+        </nav>
+    </div>
+    <div class="flex-1 flex justify-center relative">
+        <div class="relative w-4/5">
+            <i class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500 fa-solid fa-magnifying-glass"></i>
+            <input type="text"
+                class="w-full p-2 pl-10 rounded-lg bg-gray-200 focus:outline-none max-sm:text-sm"
+                placeholder="Search your Pins">
+        </div>
+    </div>
+    
+    <div class="flex items-center space-x-4">
+        <a href="/logout"
+        class="bg-[#E81939] hover:bg-[#BE0216] transition text-white font-semibold px-4 py-2 rounded-full shadow max-sm:text-sm">Logout</a>
+        <a href="/profile" class="w-9 h-9 rounded-full overflow-hidden mx-auto shadow-md">
+            <img src="/images/uploads/<%= user.dp ? user.dp : 'usericon.jpg' %>" alt="Profile Picture" class="w-full h-full object-cover"
+            loading="lazy">
+        </a>
+    </div>
+</header>

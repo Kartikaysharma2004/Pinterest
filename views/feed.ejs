@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Pinterest</title>
+    <link rel="shortcut icon" href="https://s.pinimg.com/webapp/favicon_48x48-7470a30d.png" type="image/x-icon">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://unpkg.com/lenis@1.1.20/dist/lenis.css">
+    <script src="https://kit.fontawesome.com/cfcf372f7f.js" crossorigin="anonymous"></script>
+</head>
+
+<body class="font-sans">
+
+    <% include ./partials/nav.ejs %>
+
+
+        <div class="w-full min-h-screen px-8 py-12">
+            <!-- Masonry Grid -->
+            <div class="columns-4 gap-4 max-lg:columns-2 max-md:columns-1">
+                <% post.forEach(function(post){ %>
+                    <div
+                        class="break-inside-avoid mb-4 bg-white rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 ease-in-out hover:scale-105 hover:shadow-xl">
+                        <div class="w-full cursor-pointer relative">
+                            <!-- Image with hover effects -->
+                            <img class="w-full h-auto object-cover rounded-md transition duration-300 ease-in-out 
+                        hover:brightness-110 hover:scale-105 hover:rotate-3" src="/images/uploads/<%= post.image %>"
+                                alt="" loading="lazy">
+
+                            <!-- Overlay with text -->
+                            <div
+                                class="absolute flex items-center gap-3 bottom-0 left-0 w-full bg-gradient-to-t from-black via-transparent to-transparent p-4">
+                                <div class="dp w-10 h-10 rounded-full overflow-hidden shadow-md">
+                                    <img class="w-full h-full rounded-full object-cover"
+                                        src="/images/uploads/<%= post.user && post.user.dp ? post.user.dp : 'usericon.jpg' %>"
+                                        alt="Profile Picture">
+                                </div>
+
+
+                                <h3 class="text-white text-lg max-sm:text-xs font-semibold truncate">
+                                    <%= post.user && post.user.username %>
+                                </h3>
+                            </div>
+
+                        </div>
+                    </div>
+                    <% }) %>
+            </div>
+        </div>
+
+        <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+        <script src="app.js"></script>
+        <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
+        <script src="/javascripts/script.js"></script>
+        <script src="https://kit.fontawesome.com/cfcf372f7f.js" crossorigin="anonymous"></script>
+
+        <% include ./partials/footer.ejs %>
